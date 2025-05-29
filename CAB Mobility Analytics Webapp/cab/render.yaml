@@ -2,7 +2,7 @@ services:
   - type: web
     name: django-app
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && pip install gunicorn && pip install whitenoise && python manage.py collectstatic --noinput && python manage.py migrate
     startCommand: gunicorn cab.wsgi
     envVars:
       - key: DJANGO_SETTINGS_MODULE
