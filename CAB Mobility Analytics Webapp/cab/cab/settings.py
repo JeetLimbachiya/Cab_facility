@@ -16,6 +16,20 @@ import pathlib
 target_path = pathlib.Path(os.path.abspath(__file__)).parents[3]
 sys.path.append(target_path)
 from config import config
+# ------------
+# settings.py
+
+import os
+
+ALLOWED_HOSTS = ['*']  # or use render-specific hostname later
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # add this
+
+# At the end of the file, add:
+import django_heroku
+django_heroku.settings(locals())  # optional, for auto config
+# ---------
+
 
 credentials = config()
 
