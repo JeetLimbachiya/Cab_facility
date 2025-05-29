@@ -25,9 +25,6 @@ ALLOWED_HOSTS = ['*']  # or use render-specific hostname later
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # add this
 
-# At the end of the file, add:
-import django_heroku
-django_heroku.settings(locals())  # optional, for auto config
 # ---------
 
 
@@ -52,6 +49,7 @@ ALLOWED_HOSTS = credentials['ALLOWED_HOSTS']
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,6 +63,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,6 +128,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+import os
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/'
